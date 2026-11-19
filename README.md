@@ -54,4 +54,5 @@ npm install     # install server dependencies (ws)
 npm start       # run the game server: ws://localhost:7878
 node tests/engine.test.js
 node tests/client-smoke.js
+node tests/server.test.js
 ```
