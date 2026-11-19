@@ -1,0 +1,36 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Trigger the workflow every time someone pushes to the `main` branch
+  push:
+    branches: ["main"]
+
+# Sets permissions that the job needs. See https://docs.github.com/en/actions/using-workflows/choosing-permissions-for-the-workflow
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs caused by the deploy-pages activity itself.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job.
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository as an artifact
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
